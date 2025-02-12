@@ -188,7 +188,8 @@ U_Z_branch: Condicion_branch port map(
 mux_op1: with sel_op1 select
 	op1 <= pc when "00",
 	       pc_instr when "01",
-	       rs1  when others; --10
+	       rs1  when "10", 
+          32x"0" when others; --11
 -- end mux_op1
 
 mux_op2: with sel_op2 select
