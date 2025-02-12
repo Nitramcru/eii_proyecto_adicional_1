@@ -104,6 +104,18 @@ begin
               sel_op2  <= "01";
               modo_alu <= "01";
 
+            when 7x"17" =>
+              -- tipo U
+              sel_INMEDIATO <= "100" ;
+              -- alu : suma
+               modo_alu <= "00";
+               -- op1: pc
+               sel_op1 <= "01";
+               -- op2: inmediato
+               sel_op2 <= "01";
+
+            
+
             When 7x"23" =>
               --mem (RS1 + inmediato)* <= RS2
               sel_inmediato <= "010";
@@ -119,6 +131,16 @@ begin
               sel_op1 <= "10"; 
               sel_op2 <= "00"; 
               modo_alu <= "10" ;
+
+            when 7x"37" =>
+              -- tipo U
+              sel_INMEDIATO <= "100" ;
+              -- alu : suma
+               modo_alu <= "00";
+               -- op1: 0
+               sel_op1 <= "11";
+               -- op2: inmediato
+               sel_op2 <= "01";
 
             when 7x"63" =>
               --Y_alu_r* <= pc_instr + inmediato 
