@@ -42,7 +42,7 @@ $(resultados): | $(trabajo)
 $(arch_cf): $(arch_fuente) | $(resultados)
 	cd $(trabajo) && ghdl -i $(ops) $(arch_fuente)
 
-netlistsvg = $(let nsvg,$(shell which netlistsvg),$(if $(wildcard $(nsvg).cmd),$(nsvg).cmd,$(nsvg)))
+netlistsvg = $(let nsvg,$(shell which netlistsvg 2>/dev/null),$(if $(wildcard $(nsvg).cmd),$(nsvg).cmd,$(nsvg)))
 
 define plantilla =
 $(1): $(arch_cf)
