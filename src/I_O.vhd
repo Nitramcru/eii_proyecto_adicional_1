@@ -4,12 +4,12 @@ use IEEE.std_logic_1164.all;
 entity I_O is
   port (
     clk :in std_logic;
-    dir:in std_logic_vector (7 downto 0);
-    hab_escritura :in std_logic_vector (3 downto 0);
+    dir:in std_logic_vector (2 downto 0);
+    hab_escritura :in std_logic;
     dat_escritura :in std_logic_vector (31 downto 0);
    
     
-    dat_lectura :out std_logic_vector (31 downto 0)
+    dat_lectura :out std_logic_vector (31 downto 0);
 
     I0 :in std_logic;
     I1 :in std_logic;
@@ -19,7 +19,7 @@ entity I_O is
     O0 :out std_logic;
     O1 :out std_logic;
     O2 :out std_logic;
-    O3 :out std_logic;
+    O3 :out std_logic
   );
 end I_O;
 
@@ -52,7 +52,7 @@ begin
   U9: process(clk)
       begin
       if rising_edge(clk) then
-          K <= dir;  
+          k <= dir;  
       end if;
       end process;
 
@@ -67,6 +67,7 @@ begin
     O2 when "110",
     O3 when others; --111
 
+  dat_lectura(31 downto 1 ) <= 31x"0";
 
   U11: process(all)
       begin
