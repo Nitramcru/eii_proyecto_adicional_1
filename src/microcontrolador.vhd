@@ -2,7 +2,9 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity microcontrolador is
-  
+  generic(
+    constant archivo : string :=""
+  );
   port (
     reset :in std_logic;
     clk :in std_logic;
@@ -98,7 +100,9 @@ begin
     hab_escritura => hab_escritura,
   );
 
-  U2: Memoria_RAM_dp_256x32_B port map (
+  U2: Memoria_RAM_dp_256x32_B  generic map (
+    archivo => archivo
+   ) port map (
       clk_escritura => clk,
       dir_escritura => dir (9 downto 2),
       hab_escritura => (others => hab_escritura_RAM ) ,
