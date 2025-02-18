@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.all;
 
 entity microcontrolador is
   generic(
-    constant archivo : string :=""
+    constant archivo : string :="parpadeo_con_retardo.mem"
   );
   port (
     reset :in std_logic;
@@ -97,7 +97,7 @@ begin
     dat_lectura => dat_lectura,
     dir => dir,
     dat_escritura => dat_escritura,
-    hab_escritura => hab_escritura,
+    hab_escritura => hab_escritura
   );
 
   U2: Memoria_RAM_dp_256x32_B  generic map (
@@ -132,7 +132,7 @@ begin
         O0 => O0,
         O1 => O1,
         O2 => O2,
-        O3 => O3,
+        O3 => O3
 
   );
 
@@ -142,7 +142,7 @@ begin
     
         D => dir (31),
         clk => clk,
-        Q => sel_I_O, 
+        Q => sel_I_O
 
   );
   
