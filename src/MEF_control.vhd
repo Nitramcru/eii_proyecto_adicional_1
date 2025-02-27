@@ -176,7 +176,7 @@ begin
               sel_Y <= "00"; 
               esc_reg <= '1'; 
             
-            when 7x"13" | 7x"33" =>
+            when 7x"13" | 7x"33" | 7x"17" | 7x"37"=>
               --RD2* <= y_alu_r 
               sel_y <= "10"; 
               esc_reg <= '1';

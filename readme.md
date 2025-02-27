@@ -40,6 +40,7 @@ Código C
 int main(void)
 {
     volatile uint32_t *const o0 = (void*)0x80000010;
+    *o0 = 0;
     for(;;)
     {
         *o0 = ! *o0;
@@ -54,15 +55,18 @@ Listado ensamblador
 00000000 <main>:
     0:         80000737        lui x14 0x80000
     4:         001466b7        lui x13 0x146
-00000008 <L3>:
-    8:         01072783        lw x15 16 x14
-    c:         0017b793        sltiu x15 x15 1
-    10:        00f72823        sw x15 16 x14
-    14:        85468793        addi x15 x13 -1964
+    8:         00000793        addi x15 x0 0
+    c:         00c0006f        jal x0 12 <L2>
+00000010 <L3>:
+    10:        01072783        lw x15 16 x14
+    14:        0017b793        sltiu x15 x15 1
 00000018 <L2>:
-    18:        fff78793        addi x15 x15 -1
-    1c:        fe079ee3        bne x15 x0 -4 <L2>
-    20:        fe9ff06f        jal x0 -24 <L3>
+    18:        00f72823        sw x15 16 x14
+    1c:        85468793        addi x15 x13 -1964
+00000020 <L1>:
+    20:        fff78793        addi x15 x15 -1
+    24:        fe079ee3        bne x15 x0 -4 <L1>
+    28:        fe9ff06f        jal x0 -24 <L3>
 ~~~
 
 Archivo parpadeo_con_retardo.mem:
@@ -70,6 +74,8 @@ Archivo parpadeo_con_retardo.mem:
 ~~~hex
 80000737
 001466b7
+00000793
+00c0006f
 01072783
 0017b793
 00f72823
@@ -88,6 +94,7 @@ Código C
 int main(void)
 {
     volatile uint32_t *const o0 = (void*)0x80000010;
+    *o0 = 0;
     for(;;)
     {
         *o0 = ! *o0;
@@ -100,17 +107,22 @@ Listado Ensamblador
 ~~~asm
 00000000 <main>:
     0:         80000737        lui x14 0x80000
-00000004 <L2>:
-    4:         01072783        lw x15 16 x14
-    8:         0017b793        sltiu x15 x15 1
-    c:         00f72823        sw x15 16 x14
-    10:        ff5ff06f        jal x0 -12 <L2>
+    4:         00000793        addi x15 x0 0
+    8:         00c0006f        jal x0 12 <L1>
+0000000c <L2>:
+    c:         01072783        lw x15 16 x14
+    10:        0017b793        sltiu x15 x15 1
+00000014 <L1>:
+    14:        00f72823        sw x15 16 x14
+    18:        ff5ff06f        jal x0 -12 <L2>
 ~~~
 
 Archivo parpadeo_sin_retardo.mem:
 
 ~~~hex
 80000737
+00000793
+00c0006f
 01072783
 0017b793
 00f72823
