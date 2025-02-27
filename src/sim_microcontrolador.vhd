@@ -9,7 +9,7 @@ end sim_microcontrolador;
 architecture sim of sim_microcontrolador is
   component microcontrolador is
     generic(
-    constant archivo : string :="parpadeo_con_retardo.mem"
+    constant archivo : string :="../src/parpadeo_con_retardo.mem"
   );
 
   port (
@@ -29,9 +29,9 @@ architecture sim of sim_microcontrolador is
 
 begin
   -- Dispositivo bajo prueba
-  dut : microcontrolador  (A=>entradas(1),B=>entradas(0),Y=>salida);
+  
 
-  dut: microcontrolador port map (archivo => "parpadeo_con_retardo.mem") 
+  dut: microcontrolador generic map (archivo => "../src/parpadeo_sin_retardo.mem") 
   port map (
     reset => reset,
     clk => clk,
@@ -51,20 +51,17 @@ begin
   end process;
 
  
-  process
-  begin
-    -- Reset inicial
-    reset <= '1';
-    wait for 20 ns;
-    reset <= '0';
-
-    
   excitaciones: process
   begin
-    for i in 0 to 15 loop
-      (I0, I1, I2, I3) <= std_logic_vector(to_unsigned(i, 4));
-      wait for clk_period;
-    end loop;
+    I0 <= '0';
+    I1 <= '0';
+    I2 <= '0';
+    I3 <= '0';
+    reset <= '1';
+    wait for clk_period;
+    reset <= '0';
+
+    wait for 1000*clk_period;
 
     wait for 1 ns; -- Espera extra antes de salir
     finish;

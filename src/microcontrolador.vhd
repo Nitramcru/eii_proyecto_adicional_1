@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.all;
 
 entity microcontrolador is
   generic(
-    constant archivo : string :="parpadeo_con_retardo.mem"
+    constant archivo : string :="../src/parpadeo_con_retardo.mem"
   );
   port (
     reset :in std_logic;
@@ -86,7 +86,8 @@ architecture arch of microcontrolador is
   end component;
 
   signal hab_escritura, hab_escritura_RAM, hab_escritura_I_O, sel_I_O :std_logic;
-  signal dir, dat_escritura, dat_lectura :std_logic_vector (31 downto 0);
+  signal dir :std_logic_vector (31 downto 2);
+  signal dat_escritura, dat_lectura, dat_lectura_io, dat_lectura_ram :std_logic_vector (31 downto 0);
 
 begin
 
@@ -109,12 +110,12 @@ begin
       dat_escritura => dat_escritura,
      
       clk_lectura => clk,
-      dir_lectura => dir,
+      dir_lectura => dir (9 downto 2),
       hab_lectura => '1',
-      dat_lectura => dat_lectura
+      dat_lectura => dat_lectura_ram
   );
 
-  hab_escritura <= not dir(31) and hab_escritura;
+  hab_escritura_RAM <= not dir(31) and hab_escritura;
 
 
   U3: I_O port map (
@@ -122,7 +123,7 @@ begin
         dir => dir (4 downto 2),
         hab_escritura => hab_escritura_I_O ,
         dat_escritura => dat_escritura ,
-        dat_lectura => '1',
+        dat_lectura => dat_lectura_io,
 
         I0 => I0 ,
         I1 => I1,
@@ -146,5 +147,8 @@ begin
 
   );
   
+  with sel_I_O select dat_lectura <=
+    dat_lectura_ram when '0',
+    dat_lectura_io when others; 
   
 end arch;
