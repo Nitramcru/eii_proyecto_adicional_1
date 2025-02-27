@@ -13,14 +13,14 @@ architecture sim of sim_microcontrolador is
   );
 
   port (
-    reset : in std_logic;
+    nreset : in std_logic;
     clk : in std_logic;
     I0, I1, I2, I3 : in std_logic;
     O0, O1, O2, O3 : out std_logic
   );
   end component; -- microcontrolador
 
-  signal reset, clk : std_logic := '0';
+  signal nreset, clk : std_logic := '0';
   signal I0, I1, I2, I3 : std_logic := '0';
   signal O0, O1, O2, O3 : std_logic;
 
@@ -33,7 +33,7 @@ begin
 
   dut: microcontrolador generic map (archivo => "../src/parpadeo_sin_retardo.mem") 
   port map (
-    reset => reset,
+    nreset => nreset,
     clk => clk,
     I0 => I0, I1 => I1, I2 => I2, I3 => I3,
     O0 => O0, O1 => O1, O2 => O2, O3 => O3
@@ -57,9 +57,9 @@ begin
     I1 <= '0';
     I2 <= '0';
     I3 <= '0';
-    reset <= '1';
+    nreset <= '0';
     wait for clk_period;
-    reset <= '0';
+    nreset <= '1';
 
     wait for 1000*clk_period;
 

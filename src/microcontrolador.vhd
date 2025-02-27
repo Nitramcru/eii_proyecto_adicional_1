@@ -6,7 +6,7 @@ entity microcontrolador is
     constant archivo : string :="../src/parpadeo_con_retardo.mem"
   );
   port (
-    reset :in std_logic;
+    nreset :in std_logic;
     clk :in std_logic;
 
     I0 :in std_logic;
@@ -85,12 +85,14 @@ architecture arch of microcontrolador is
     );
   end component;
 
+  signal reset :std_logic;
   signal hab_escritura, hab_escritura_RAM, hab_escritura_I_O, sel_I_O :std_logic;
   signal dir :std_logic_vector (31 downto 2);
   signal dat_escritura, dat_lectura, dat_lectura_io, dat_lectura_ram :std_logic_vector (31 downto 0);
 
 begin
 
+  reset <= not nreset;
 
   U1: CPU port map (
     reset => reset ,
